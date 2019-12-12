@@ -11,22 +11,17 @@ max1 x y z =
           if x >= y && x >= z then x
           else if y >= x && y >= z then y
           else z
--- max1 986965 984963 984174
--- 986965
+     
 max2 :: Int -> Int -> Int -> Int
 max2 x y z = 
           if x -(y+z) >= y -(x+z) && x -(y+z) >= z -(x+y) then x
           else if y -(x+z) >= x -(y+z) && y -(x+z) >= z -(x+y) then y
           else z
--- max2 986965 984963 984174
--- 986965
 
 --------b)
 checkcorrectness :: Int -> Int -> Int -> Bool
 checkcorrectness x y z =
          max1 x y z == max2 x y z
--- +++ Ok, passed 100 tests.
---  This correctness check has a weakness as 100 tests cases might not be enough in order to cover all the possible situations.
 
 ----------Question2----------
 rounded :: Float -> Int -> Float
@@ -38,10 +33,6 @@ circleArea d = pi* (d/2)* (d/2)
  
 luigi :: Float -> Float -> Float
 luigi x y = rounded (( (circleArea x) *0.002 + y*0.6)*1.6) (2)
-
---Pizza Bambini 6.32
---Pizza Famiglia 4.49
---Pizza Bambini is more expensive than pizza Famiglia.
 
 ----------Question3----------
 ---------a)
@@ -359,40 +350,3 @@ stratI xs = if snd (maxi xs) - mini xs 9999 == 0 then stratB xs
 ---3:*
 ---Computer's turn 
 ---Computer, you have won!
-
-
----We have tried to implement the winning strategy from CS-175
----With balanced and unbalanced positions
----However we could not implement this solution, 
----even though we know this is the optimal one
----If you could let us know the implementation for this strategy,
----that would be much appreciated.
-
-toBin :: Int -> [Int]
-toBin 0 = [0]
-toBin 1 = [1]
-toBin n
-    | n `mod` 2 == 0 = toBin (n `div` 2) ++ [0]
-    | otherwise = toBin (n `div` 2) ++ [1]
-
-xor a b = if a==b then 0
-           else 1
-
-and' 1 1 = 1
-and' _ _ = 0
-
-bitsum :: [Int] -> [Int] -> [Int]
-bitsum xs ys 
-      |(sum xs) == 0 = ys
-      |(sum ys) == 0 = xs
-      |otherwise = bitsum low ((tail high) ++ [0])
-           where low = zipWith xor xs ys
-                 high = zipWith and' xs ys
-
-mysum ::[Int] -> [Int]
-mysum (x:(y:xs)) = bitsum (toBin (x)) (toBin (y))
-
-
- 
-
-
